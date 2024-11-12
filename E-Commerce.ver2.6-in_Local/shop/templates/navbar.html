@@ -1,0 +1,127 @@
+<!-- container: Class của Bootstrap để tạo khung chứa responsive có độ rộng cố định -->
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo/lotus.jpg') }}"
+                alt="Tuan's Store Logo" height="50"> My Store</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">Về chúng tôi</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Thương hiệu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for brand in brands %}
+
+                        <a class="dropdown-item" href="{{url_for('get_brand', id=brand.id)}}">{{brand.name}}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Danh mục sản phẩm
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for c in categories %}
+                        <a class="dropdown-item" href="{{url_for('get_category', id=c.id)}}">{{c.name}}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('get_cart') }}">
+                        Quan tâm (
+                        {% if current_user.is_authenticated %}
+                        {% set cart_count = CustomerOrder.query.filter_by(customer_id=current_user.id,
+                        status='in_cart').count() %}
+                        {{ cart_count }}
+                        {% else %}
+                        {% if 'shopcart' in session %}
+                        {{ session['shopcart']|length }}
+                        {% else %}
+                        0
+                        {% endif %}
+                        {% endif %}
+                        )
+                    </a>
+                </li>
+            </ul>
+
+            <!-- ml-auto: margin-left: auto - đẩy menu này sang phải -->
+            <ul class="navbar-nav ml-auto">
+
+                <form action="{{ url_for('search') }}" method="GET" class="form-inline my-2 my-lg-0">
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="q" placeholder="Tìm kiếm..."
+                            class="form-control mr-sm-2 bg-white text-dark">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-light" type="submit">🔍</button>
+                        </div>
+                    </div>
+                </form>
+
+
+
+                <!-- current_user: Object từ Flask-Login chứa thông tin user hiện tại
+                     is_authenticated: Kiểm tra đã đăng nhập chưa -->
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{ current_user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="{{ url_for('user_profile') }}">Cập nhật thông tin cá nhân</a>
+                        {% if current_user.role == 'admin' %}
+                        <a class="dropdown-item" href="{{ url_for('admin_logout') }}">Đăng xuất</a>
+                        {% else %}
+                        <a class="dropdown-item" href="{{ url_for('customerLogout') }}">Đăng xuất</a>
+                        {% endif %}
+                    </div>
+                </li>
+
+                {% else %}
+                <li class="nav-item">
+                    <a class='nav-link' href="{{url_for('customerLogin')}}">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class='nav-link' href="{{url_for('register_customer')}}">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% if not current_user.is_authenticated %}
+    <div class="container">
+        <div class="alert alert-info text-center" role="alert">
+            Vui lòng đăng nhập để thêm sản phẩm quan tâm và được tư vấn! (Nếu quý khách chưa có tài khoản, vui lòng đăng
+            ký và đăng nhập)
+        </div>
+    </div>
+    {% endif %}
+    {% include '_messages.html' %}
+</div>
+
+<style>
+    .navbar {
+        min-height: 50px;
+    }
+
+    .navbar-brand {
+        padding: 0 15px;
+        height: 50px;
+        line-height: 50px;
+    }
+</style>

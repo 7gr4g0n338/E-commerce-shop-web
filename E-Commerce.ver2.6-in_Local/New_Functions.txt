@@ -1,0 +1,32 @@
+1. Thêm chức năng search cho admin ✔
+2. Update lại database ✔
+3. Thêm việc xác thực cho admin ✔
+4. Thêm hiệu ứng gương để quan sát ảnh ✔
+5. Chỉnh sửa lại bố cục code, giao diện cho dễ hiểu hơn. ✔
+6. Đổi sang tiếng việt ✔
+7. Sửa màu sắc, bố cục frontend. ✔
++ Chỉnh lại thanh taskbar vì nó hơi to. ✔
++ Chỉnh lại màu của các thanh thêm sản phẩm, thương hiệu, danh mục. ✔
++ Muốn thêm các icon mô tả thương hiệu, danh mục sản phẩm, quan tâm và liên hệ để khi người dùng giao diện điện thoại bấm vào sẽ được điều hướng đến đúng trang. ✔
++ Chỉnh lại trang login, thêm dòng đăng kí tài khoản, quên mật khẩu. ✔
+
+8. Các bug và function được gợi ý:
+Đư** recommend:
+8.1 Các bug liên quan tới xác thực backend:
++ tất cả các input thì có thể chỉnh số lớn hơn số lượng có hoặc số âm cũng được. => đã làm thay đổi logic code, user bắt buộc phải login thì mới thêm được sản phẩm vào mục quan tâm. ✔
++ Điều hướng lại trang / khi truy cập vào các trang hoặc đường dẫn không tồn tại. ✔
+
+Du**n recommand:
+8.2 Về mặt thiết kế.
++ Cho phép search theo giá của sản phẩm. ✔
++ Điều chỉnh khoảng cách ảnh trong phần detail và thanh nav-item. ✔
++ Số lượng căn lề phải ✔
++ Phần tên sản phẩm ở mục quan tâm, khi nhấn vào thì sẽ điều hướng tới chi tiết của sản phẩm đó. ✔
++ khi nhấn vào username của mình thì sẽ sổ xuống cho lựa chọn chỉnh sửa thông tin cá nhân - upload ảnh đại diện, đăng xuất hoặc đổi mật khẩu(web phèn nên không có chức năng này -> chỉ có cách tạo tài khoản mới). ✔
+
+Mine:
++ Sửa lại icon đăng xuất thành icon thông tin người dùng, thêm icon danh mục. ✔ 
++ Thêm icon cuộn lên trên. để khi ấn vào nút đó thì sẽ được tự động cuộn lên. ✔
++ Thêm chức năng tìm kiếm người dùng cho admin.✔
++ Chỉnh sửa lại phần hiển thị 5 sản phẩm mà khách hàng quan tâm, ưu tiên hiển thị các sản phẩm quan tâm trước các thao tác mới nhất của user.✔
++ Thêm trang về chúng tôi, để giới thiệu về cửa hàng. ✔

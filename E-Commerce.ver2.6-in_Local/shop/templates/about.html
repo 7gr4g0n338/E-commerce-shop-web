@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+{% block body_block %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2 class="text-center mb-4 " style="margin-top: 0.5cm;">VỀ CHÚNG TÔI</h2>
+
+            <div class="about-section mb-5">
+                <p>Chính thức thành lập vào năm 2016 và trải qua nhiều giai đoạn phát triển thăng trầm, đến nay My store
+                    đã dần khẳng định được vị thế vững mạnh trong lĩnh vực vật liệu ốp lát và nội thất nhà tắm. Với kinh
+                    nghiệm và sự tận tâm trong mọi hoạt động kinh doanh, chúng tôi cam kết phân phối chính hãng các sản
+                    phẩm gạch, sàn gỗ, thiết bị vệ sinh và nhà bếp cho dự án công trình, nhà ở dân dụng.</p>
+                <img src="{{ url_for('static', filename='images/about/about.jpg') }}" class="img-fluid my-4"
+                    alt="My Store">
+            </div>
+
+            <h3 class="mb-3">TẦM NHÌN</h3>
+            <div class="vision-section mb-5">
+                <p>My store hướng tới mục tiêu trở thành đơn vị hàng đầu trong lĩnh vực phân phối vật liệu xây dựng,
+                    cung cấp những giải pháp tối ưu và sản phẩm chất lượng cao. Phát triển bền vững, nâng cao chất lượng
+                    công trình và giá trị cuộc sống.</p>
+            </div>
+
+            <h3 class="mb-3">SỨ MỆNH</h3>
+            <div class="mission-section mb-5">
+                <p>Đáp ứng nhu cầu ngày càng cao về vật liệu xây dựng bằng cách cung cấp những sản phẩm gạch ốp lát và
+                    thiết bị vệ sinh chất lượng hàng đầu với tiêu chuẩn tốt nhất về thẩm mỹ, tính năng và độ bền. Chúng
+                    tôi xây dựng mối quan hệ đối tác đáng tin cậy với khách hàng, nhà thầu và đối tác, đồng hành trong
+                    mọi dự án xây dựng.</p>
+            </div>
+
+            <h3 class="mb-3">GIÁ TRỊ CỐT LÕI</h3>
+            <div class="values-section mb-5">
+                <ul>
+                    <li><strong>Tin cậy:</strong> Chúng tôi xây dựng mối quan hệ đáng tin cậy với khách hàng, nhà thầu
+                        và đối tác. Đảm bảo sự trung thực, uy tín trong mọi giao dịch và cam kết.</li>
+                    <li><strong>Tận tâm:</strong> Đối với chúng tôi, khách hàng luôn là trung tâm của mọi hoạt động. Đội
+                        ngũ nhân viên giàu kinh nghiệm, luôn sẵn lòng tư vấn, hỗ trợ và đáp ứng mọi nhu cầu của khách
+                        hàng với tinh thần tận tâm.</li>
+                    <li><strong>Tiên phong:</strong> luôn là dẫn đầu xu hướng trong việc tìm kiếm những sản phẩm và giải
+                        pháp mới để mang đến những trải nghiệm tuyệt vời dành cho khách hàng.</li>
+                    <li><strong>Sáng tạo:</strong> Chúng tôi khuyến khích sự sáng tạo và đổi mới trong mọi khía cạnh của
+                        hoạt động kinh doanh để đem đến những sản phẩm và dịch vụ độc đáo, đột phá.</li>
+                    <li><strong>Chất lượng:</strong> Chúng tôi cam kết cung cấp cho khách hàng những sản phẩm chính
+                        hãng, chất lượng hàng đầu, nâng tầm giá trị công trình xây dựng và không gian sống tiện nghi.
+                    </li>
+                </ul>
+            </div>
+
+            <h3 class="mb-3">TRIẾT LÝ KINH DOANH</h3>
+            <div class="philosophy-section mb-5">
+                <p>My store luôn đặt chất lượng sản phẩm và dịch vụ lên hàng đầu. Mang đến cho khách hàng những giá trị
+                    khác biệt, bền vững và trải nghiệm mua sắm tuyệt vời là tiêu chí quan tâm hàng đầu của chúng tôi.
+                    Đồng thời, chuyên nghiệp và tận tình là yếu tố quan trọng luôn có trong mọi giao dịch với khách hàng
+                    và đối tác.</p>
+            </div>
+
+            <h3 class="mb-3">LĨNH VỰC HOẠT ĐỘNG</h3>
+            <div class="business-section mb-5">
+                <p>My store tự hào tiên phong trong lĩnh vực phân phối gạch ốp lát, thiết bị vệ sinh, thiết bị nhà bếp
+                    và sàn gỗ cao cấp. Chúng tôi là đơn vị uy tín cung cấp các sản phẩm chất lượng bền vững cho mọi công
+                    trình, dự án và nhà ở dân dụng.</p>
+                <div class="product-category mb-4">
+                    <h4>GẠCH ỐP LÁT</h4>
+                    <p>My store cung cấp gạch ốp lát với các mẫu mã, kích thước và chất liệu đa dạng để khách hàng có
+                        thể thỏa sức lựa chọn theo phong cách ý tưởng thiết kế của mình. Đặc biệt là sản phẩm cao cấp
+                        trong nước, hoặc nhập khẩu trực tiếp từ Châu Âu, Ấn Độ. Các xu hướng gạch ốp lát luôn được cập
+                        nhật liên tục cùng với đó là kiểu dáng tinh tế và chất lượng bền bỉ theo thời gian.</p>
+                    <p>Sản phẩm gạch ốp lát do My store cung cấp có tính ứng dụng cao, tại nhiều không gian kiến trúc,
+                        từ đương đại, công trình rộng lớn đến nhà ở dân dụng.</p>
+                </div>
+
+                <div class="product-category mb-4">
+                    <h4>SÀN GỖ</h4>
+                    <p>Lấy cảm hứng từ tinh hoa đất mẹ và những khu rừng xanh ngát tràn ngập ánh sáng, dòng sản phẩm sàn
+                        gỗ tại My store là sự hòa hợp giữa cuộc sống hiện đại với thiên nhiên thơ mộng. Chúng tôi đem
+                        đến giải pháp vật liệu xây dựng xanh, thân thiện môi trường mà vẫn đảm bảo chất lượng công trình
+                        bền đẹp, đầy tính thẩm mỹ.</p>
+                    <p>Với tông màu, sắc thái đa dạng và kích thước phong phú, quý khách có thể khai thác tối đa công
+                        dụng của sàn gỗ trong nhiều kiến trúc, vừa lát nền vừa ốp tường.</p>
+                </div>
+
+                <div class="product-category mb-4">
+                    <h4>THIẾT BỊ VỆ SINH</h4>
+                    <p>My store là địa điểm uy tín phân phối hàng loạt các thiết bị vệ sinh cao cấp. Bao gồm: bồn cầu,
+                        bồn tiểu, bồn tắm, sen vòi và các phụ kiện đi kèm, đảm bảo sự tiện nghi và sang trọng cho không
+                        gian phòng tắm.</p>
+                </div>
+
+                <div class="product-category mb-4">
+                    <h4>THIẾT BỊ NHÀ BẾP</h4>
+                    <p>Chúng tôi tự hào mang đến không gian hoàn hảo cho các chị em nội trợ với thiết bị nhà bếp chất
+                        lượng cao, công nghệ tân tiến và đa dạng mẫu mã. Nâng cao giá trị cuộc sống ngay từ những điều
+                        thường nhật nhất.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .about-section img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    h2,
+    h3,
+    h4 {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .container {
+        margin-bottom: 50px;
+    }
+
+    .product-category {
+        padding-left: 20px;
+    }
+
+    .values-section ul {
+        padding-left: 40px;
+    }
+
+    .contact-info {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

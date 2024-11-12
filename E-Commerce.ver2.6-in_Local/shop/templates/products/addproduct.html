@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block body_block %}
+
+<div class="container mt-5 min-height">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">
+                Thêm sản phẩm
+            </h2>
+            {% from '_formhelpers.html' import render_field %}
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <!-- Column 1 -->
+                    <div class="col-md-6">
+                        {{ render_field(form.name, class="form-control", placeholder="Tên sản phẩm")}}
+                        {{ render_field(form.price, class="form-control", placeholder="Giá") }}
+                        {{ render_field(form.stock, class="form-control", placeholder="Số lượng cửa hàng đang có") }}
+                        <label for="brand"><b>Thêm thương hiệu</b></label>
+                        <select class="form-control" name="brand" id="brand">
+                            <option value="" class="form-control" required> Chọn 1 thương hiệu</option>
+                            {% for brand in brands%}
+                            <option value={{brand.id}} class="form-control">{{brand.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="col-md-6">
+                        <label for="category"><b>Thêm danh mục</b></label>
+                        <select class="form-control" name="category" id="category">
+                            <option value="" class="form-control" required>Chọn một danh mục</option>
+                            {% for category in categories %}
+                            <option value={{category.id}} class="form-control">{{category.name}}</option>
+                            {% endfor %}
+                        </select>
+                        {{ render_field(form.desc, class="form-control", placeholder="Mô tả sản phẩm", rows="5") }}
+                        {{ render_field(form.image_1, class="form-control", placeholder="Tải ảnh sản phẩm lên")}}
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="float-left btn btn-sm btn-info" style="margin-right: 20px;">Thêm sản phẩm</button>
+                        <a href="{{url_for('admin')}}" class="btn btn-sm btn-warning">Hủy</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock body_block %}

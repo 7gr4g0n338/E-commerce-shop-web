@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+
+<div class="container">
+    {% from "_formhelpers.html" import render_field %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h1 class="text-center h1 text-white bg-primary" style="margin-top: 0.5cm;">Đăng nhập của khách hàng</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                <div>
+                    {{ render_field(form.email, class="form-control") }}
+                    {{ render_field(form.password, class="form-control") }}
+                </div>
+                <p><input type="submit" value="Login" class="btn btn-success mt-2 center">
+                <div class="text-center mt-3">
+                    <p>Chưa có tài khoản?
+                        <a href="{{ url_for('register_customer') }}" class="text-primary">Đăng ký tại đây!</a>
+                    </p>
+                    <p>Quên mật khẩu?
+                        <a href="{{ url_for('register_customer') }}" class="text-primary">Đăng ký tài khoản mới thôi
+                            :-3</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+{% endblock body_block %}

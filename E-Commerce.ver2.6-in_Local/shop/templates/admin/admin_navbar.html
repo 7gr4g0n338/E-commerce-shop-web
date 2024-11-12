@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF0000; padding-left: 0.5cm;">
+    <a class="navbar-brand" href="/admin">Trang quản trị</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/brands">Thương hiệu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/categories">Danh mục</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Quản lý sản phẩm
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('admin_addcategory') }}">Thêm danh mục sản phẩm</a>
+                    <a class="dropdown-item" href="{{ url_for('admin_addbrand') }}">Thêm thương hiệu</a>
+                    <a class="dropdown-item" href="{{ url_for('admin_addproduct') }}">Thêm sản phẩm</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_users') }}">Quản lý người dùng</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <!-- Replace the existing search form with this -->
+            <form action="{{ url_for('admin_search') }}" method="GET" class="form-inline my-2 my-lg-0">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="q" placeholder="Tìm kiếm..." aria-label="Search">
+                    <select class="custom-select" name="type">
+                        <option value="products" {% if request.endpoint !='admin_users' %}selected{% endif %}>Sản phẩm
+                        </option>
+                        <option value="users" {% if request.endpoint=='admin_users' %}selected{% endif %}>Người dùng
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-light" type="submit">🔍</button>
+                    </div>
+                </div>
+            </form>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('admin_logout')}}">Đăng xuất</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% include '_messages.html' %}

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+{% include 'content-wrapper.html' %}
+
+<div class="container mt-5 content-wrapper">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if brands %}
+            <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">Thêm thương hiệu</h2>
+            <form method="post">
+                <input type="text" name="brand" class="form-control">
+                <input type="submit" value="Thêm thương hiệu" class="btn btn-primary mt-2">
+            </form>
+            {% else %}
+            <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">Thêm danh mục</h2>
+            <form method="post">
+                <input type="text" name="category" class="form-control">
+                <input type="submit" value="Thêm danh mục" class="btn btn-primary mt-2">
+            </form>
+            {% endif %}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock body_block %}

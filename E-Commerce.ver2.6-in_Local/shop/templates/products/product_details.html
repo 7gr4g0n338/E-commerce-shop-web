@@ -1,0 +1,149 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+
+<div class="container mt-5">
+    <div class="row" style="margin-top: 0.5cm;">
+        <div class="col-md-6" id='b_image'>
+            <div class="img-magnifier-container">
+                <img id="myimage" src="{{url_for('static', filename='images/'+product.image_1)}}" alt="{{product.name}}"
+                    width="400px">
+            </div>
+        </div>
+
+        <style>
+            .img-magnifier-container {
+                position: relative;
+            }
+
+            .img-magnifier-glass {
+                position: absolute;
+                border: 2px solid #333;
+                border-radius: 50%;
+                cursor: none;
+                width: 150px;
+                height: 150px;
+                display: none;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+        <script>
+            function initMagnifier(imgID, zoom) {
+                const img = document.getElementById(imgID);
+                const glass = document.createElement("DIV");
+                glass.className = "img-magnifier-glass";
+
+                img.parentElement.insertBefore(glass, img);
+
+                const setBackgroundImage = () => {
+                    glass.style.backgroundImage = `url('${img.src}')`;
+                    glass.style.backgroundRepeat = "no-repeat";
+                    glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+                }
+
+                // Set background once image is loaded
+                if (img.complete) {
+                    setBackgroundImage();
+                } else {
+                    img.onload = setBackgroundImage;
+                }
+
+                let rect = img.getBoundingClientRect();
+
+                function updateMagnifier(e) {
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    glass.style.left = x + "px";
+                    glass.style.top = y + "px";
+
+                    const bgPosX = x * zoom - glass.offsetWidth / 2;
+                    const bgPosY = y * zoom - glass.offsetHeight / 2;
+
+                    glass.style.backgroundPosition = `-${bgPosX}px -${bgPosY}px`;
+                }
+
+                // Use requestAnimationFrame for smooth movement
+                let rafId;
+                function smoothMove(e) {
+                    cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => updateMagnifier(e));
+                }
+
+                // Event listeners with performance optimizations
+                img.addEventListener("mouseenter", () => {
+                    glass.style.display = "block";
+                    rect = img.getBoundingClientRect(); // Update rectangle on enter
+                });
+
+                img.addEventListener("mouseleave", () => {
+                    glass.style.display = "none";
+                    cancelAnimationFrame(rafId);
+                });
+
+                img.addEventListener("mousemove", smoothMove, { passive: true });
+
+                // Update rectangle on window resize
+                const resizeObserver = new ResizeObserver(() => {
+                    rect = img.getBoundingClientRect();
+                });
+                resizeObserver.observe(img);
+            }
+
+            // Initialize magnifier
+            window.addEventListener('DOMContentLoaded', () => {
+                initMagnifier("myimage", 2);
+            });
+        </script>
+        <div class="col-md-6 mt-4">
+            <h4>{{product.name}}</h4>
+            <hr>
+            <h5>Thương hiệu: {{product.brand.name}}</h5>
+            <p>Giá: {{product.price}} (VND)</p>
+            <strong>Mô tả sản phẩm:</strong>
+            <p>{{product.desc}}</p>
+            <hr>
+            <form action="{{url_for('add_cart')}}" method="post">
+                <input type="hidden" name="product_id" value="{{product.id}}">
+                <button type="submit" class="btn btn-sm btn-danger">Quan tâm</button>
+                <label for=""> Số lượng</label>
+                <input type="number" name="quantity" id='' value="1" min="1" max="{{product.stock}}">
+            </form>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" style="max-width: 90%; margin: 1.75rem auto;">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="{{url_for('static', filename='images/'+product.image_1)}}"
+                        style="max-height: 90vh; width: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background: transparent;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 0;
+            min-height: 90vh;
+        }
+
+        .product-image:hover {
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+    {% endblock body_block %}

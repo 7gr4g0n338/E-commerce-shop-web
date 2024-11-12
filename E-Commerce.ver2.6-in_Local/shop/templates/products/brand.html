@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+<div class="container mt-5" style="padding-left: 0.5cm !important; padding-right: 0.5cm !important;">
+    <table class="table table-lg table-condensed table-striped table-hover">
+        <thead>
+            <th>Stt.</th>
+            <th>Tên sản phẩn</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+        </thead>
+        <tbody>
+            {% if brands %}
+            {% for brand in brands %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{brand.name}}</td>
+                <td><a href="{{url_for('admin_updatebrand', id=brand.id)}}"
+                        class="float-left btn btn-sm btn-warning">Sửa</a></td>
+                <td>
+                    <button type="button" class="float-left btn btn-sm btn-danger btn-sm" data-toggle="modal"
+                        data-target="#staticBackdrop-{{brand.id}}">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Modal -->
+            <div class="modal" id="staticBackdrop-{{brand.id}}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{brand.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="text-danger">Bạn có muốn xóa thương hiệu này không?, {{brand.name}}</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
+                            <form action="{{url_for('admin_deletebrand', id=brand.id)}}" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <style>
+        .modal-backdrop {
+            display: none;
+        }
+
+        .modal {
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-dialog {
+            z-index: 2001;
+        }
+
+        .modal-content {
+            z-index: 2002;
+            position: relative;
+        }
+    </style>
+</div>
+{% endblock body_block %}

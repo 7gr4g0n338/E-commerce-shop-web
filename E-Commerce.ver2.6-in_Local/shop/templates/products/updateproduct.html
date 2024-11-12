@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block body_block %}
+
+<div style="padding: 0 1cm;">
+    <div class="container mt-5">
+        <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">
+            Cập nhật sản phẩm
+        </h2>
+        {% from '_formhelpers.html' import render_field %}
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <!-- Column 1 -->
+                <div class="col-md-6">
+                    {{ render_field(form.name, class="form-control", placeholder="Tên sản phẩm")}}
+                    {{ render_field(form.price, class="form-control", placeholder="Giá") }}
+                    {{ render_field(form.stock, class="form-control", placeholder="Số sản phẩm đang có") }}
+                    <label for="brand"><b>Thêm thương hiệu</b></label>
+                    <select class="form-control" name="brand" id="brand">
+                        <option value="{{product.brand_id}}" class="form-control" required>{{product.brand.name}}</option>
+                        {% for brand in brands%}
+                        <option value={{brand.id}} class="form-control">{{brand.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-md-6">
+                    <label for="category"><b>Thêm danh mục</b></label>
+                    <select class="form-control" name="category" id="category">
+                        <option value="{{product.category_id}}" class="form-control" required>{{product.category.name}}</option>
+                        {% for category in categories %}
+                        <option value={{category.id}} class="form-control">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                    {{ render_field(form.desc, class="form-control", placeholder="Product Description", rows=6) }}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="file" name="image_1" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-outline-info">Cập nhật sản phẩm</button>
+                    <a href="{{url_for('admin')}}" class="btn btn-outline-warning">Hủy</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

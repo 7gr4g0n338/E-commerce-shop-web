@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+{% include 'content-wrapper.html' %}
+
+<div class="container mt-3 content-wrapper">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if updatebrand %}
+            <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">Cập nhật thương hiệu</h2>
+            <form method="post" class="container">
+                <div class="form-group">
+                    <input type="text" name="brand" class="form-control" value="{{updatebrand.name}}">
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Cập nhật thương hiệu" class="btn btn-primary">
+                    <a href="{{url_for('admin_brands')}}" class="btn btn-warning ms-2">Hủy</a>
+                </div>
+            </form>
+
+            {% else %}
+            <h2 class="text-center h1 text-light bg-info p-2" style="margin-top: 0.5cm;">Cập nhật danh mục</h2>
+
+            <form method="post" class="container">
+                <div class="form-group">
+                    <input type="text" name="category" class="form-control" value="{{updatecategory.name}}">
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Cập nhật danh mục" class="btn btn-primary">
+                    <a href="{{url_for('admin_categories')}}" class="btn btn-warning ms-2">Hủy</a>
+                </div>
+            </form>
+
+            {% endif %}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock body_block %}

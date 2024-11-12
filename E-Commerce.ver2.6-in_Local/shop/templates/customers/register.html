@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+{% from '_formhelpers.html' import render_field %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h1 class="bg-info text-center" style="margin-top: 0.5cm;">Đăng ký tài khoản</h1>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <form action="" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4 p-2">
+                {{render_field(form.name, class="form-control", placeholder="ví dụ: Nguyễn Văn A")}}
+                {{render_field(form.username, class="form-control", placeholder="ví dụ: VanA")}}
+                {{render_field(form.email, class="form-control", placeholder="ví dụ: email@gmail.com")}}
+                {{render_field(form.password, class="form-control", placeholder="Nhập mật khẩu trên 8 ký tự")}}
+                {{render_field(form.confirm, class="form-control", placeholder="Nhập lại mật khẩu trên")}}
+                <!-- <h5>Tải ảnh đại diện lên</h5>
+                {{form.profile_image(class='btn btn-primary btn-sm')}} -->
+
+            </div>
+            <div class="col-md-4 p-2">
+                {{render_field(form.country, class="form-control", placeholder="ví dụ: Việt Nam")}}
+                {{render_field(form.state, class="form-control", placeholder="ví dụ: Hà Đông")}}
+                {{render_field(form.city, class="form-control", placeholder="ví dụ: Hà Nội")}}
+                {{render_field(form.contact, class="form-control", placeholder="ví dụ: 0987654321")}}
+                {{render_field(form.address, class="form-control", placeholder="ví dụ: Xóm A, Thôn B, Xã C")}}
+                <div class="text-right">{{form.submit(class='btn btn-success')}}</div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock body_block %}

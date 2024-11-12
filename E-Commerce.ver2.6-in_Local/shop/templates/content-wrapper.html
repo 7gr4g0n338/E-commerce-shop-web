@@ -1,0 +1,20 @@
+<style>
+    .content-wrapper {
+        min-height: calc(100vh - var(--footer-height) - var(--header-height));
+        padding: 20px 0;
+    }
+
+    :root {
+        --footer-height: 60px;
+        /* Adjust based on your footer height */
+        --header-height: 60px;
+        /* Adjust based on your header height */
+    }
+
+    @media (max-width: 768px) {
+        :root {
+            --footer-height: 80px;
+            --header-height: 50px;
+        }
+    }
+</style>

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% include 'content-wrapper.html' %}
+
+{% block body_block %}
+<div class="container mt-5 content-wrapper">
+    <div class="row">
+        <div class="col-md-12 text-center mt-5">
+            <h1>404</h1>
+            <h2>Không tìm thấy trang</h2>
+            <p>Trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.</p>
+            <a href="{{ url_for('home') }}" class="btn btn-primary">Quay về trang chủ</a>
+        </div>
+    </div>
+</div>
+{% endblock body_block%}

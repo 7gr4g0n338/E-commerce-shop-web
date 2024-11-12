@@ -1,0 +1,144 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+
+<div class="container mt-5" style="padding-left: 0.5cm !important; padding-right: 0.5cm !important;">
+    <table class="table table-lg table-condensed table-striped table-hover">
+        <thead>
+            <th>Stt.</th>
+            <th>Tên sản phẩm</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+        </thead>
+        <tbody>
+            {% if categories %}
+            {% for category in categories %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{category.name}}</td>
+                <td><a href="{{url_for('admin_updatecategory', id=category.id)}}"
+                        class="float-left btn btn-sm btn-warning"> Sửa</a></td>
+                <td>
+                    <button type="button" class="float-left btn btn-sm btn-danger btn-sm" data-toggle="modal"
+                        data-target="#staticBackdrop-{{category.id}}">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+
+            {% for category in categories %}
+            <div class="modal" id="staticBackdrop-{{category.id}}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{category.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="text-danger">Bạn có muốn xóa danh mục này không? {{category.name}}</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
+                            <form action="{{url_for('admin_deletecategory', id=category.id)}}" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="#" class="back-to-top" id="top-link" aria-label="Lên đầu trang" onclick="scrollToTop(); return false;">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide button based on scroll position
+        window.onscroll = function () {
+            var topButton = document.getElementById("top-link");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                topButton.style.display = "flex";
+            } else {
+                topButton.style.display = "none";
+            }
+        };
+    </script>
+
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .back-to-top:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-to-top i {
+            font-size: 20px;
+            color: #ffffff;
+            /* White icon */
+        }
+
+        .back-to-top:hover {
+            background-color: #c82333;
+            /* Darker red on hover */
+            text-decoration: none;
+        }
+
+        .back-to-top:hover i {
+            color: #ffffff;
+            /* Keep icon white on hover */
+        }
+
+        .modal-backdrop {
+            display: none;
+        }
+
+        .modal {
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-dialog {
+            z-index: 2001;
+        }
+
+        .modal-content {
+            z-index: 2002;
+            position: relative;
+        }
+    </style>
+</div>{% endblock body_block %}

@@ -1,0 +1,136 @@
+{% extends 'admin/index.html' %}
+{% block body_block %}
+{% include 'content-wrapper.html' %}
+
+<div class="container mt-5 content-wrapper" style="padding-left: 0.5cm !important; padding-right: 0.5cm !important;">
+    <h4 class="ms-10 mt-3">Tất cả người dùng</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ đầy đủ</th>
+                <th>Ngày đăng ký</th>
+                <th>Sản phẩm quan tâm</th>
+                <th>Xóa tài khoản người dùng</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.contact }}</td>
+                <td>
+                    {% if user.address and user.state and user.city and user.country %}
+                    {{ user.address }}, {{ user.city }}, {{ user.state }}, {{ user.country }}
+                    {% else %}
+                    <span class="text-muted">Chưa cập nhật địa chỉ</span>
+                    {% endif %}
+                </td>
+                <td>{{ user.date_created.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% if user_carts[user.id] %}
+                    <ul class="list-unstyled">
+                        {% for item in user_carts[user.id] %}
+                        <li>
+                            {{ item.product.name }} (x{{ item.quantity }})
+                            <span
+                                class="badge {% if item.status == 'in_cart' %}badge-success{% else %}badge-danger{% endif %}">
+                                {{ 'Đang quan tâm' if item.status == 'in_cart' else 'Đã xóa' }}
+                            </span>
+                            <small class="text-muted">
+                                {{ item.date_added.strftime('%Y-%m-%d %H:%M') }}
+                            </small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <span class="text-muted">Không có sản phẩm</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{{url_for('delete_user', id=user.id)}}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="#" class="back-to-top" id="top-link" aria-label="Lên đầu trang" onclick="scrollToTop(); return false;">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide button based on scroll position
+        window.onscroll = function () {
+            var topButton = document.getElementById("top-link");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                topButton.style.display = "flex";
+            } else {
+                topButton.style.display = "none";
+            }
+        };
+    </script>
+
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .back-to-top:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-to-top i {
+            font-size: 20px;
+            color: #ffffff;
+            /* White icon */
+        }
+
+        .back-to-top:hover {
+            background-color: #c82333;
+            /* Darker red on hover */
+            text-decoration: none;
+        }
+
+        .back-to-top:hover i {
+            color: #ffffff;
+            /* Keep icon white on hover */
+        }
+    </style>
+</div>
+
+{% endblock body_block %}

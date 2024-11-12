@@ -1,0 +1,244 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+<div class="container mt-5" style="padding-left: 0.5cm !important; padding-right: 0.5cm !important;">
+    <table class="table table-lg table-condensed table-striped table-hover table-responsive-sm">
+        <h4 class="ms-10 mt-3">Danh sách các sản phẩm có sẵn</h4>
+        <thead>
+            <th>Stt.</th>
+            <th>Sản Phẩm</th>
+            <th>Giá</th>
+            <th>Thương hiệu</th>
+            <th>Hình ảnh</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+        </thead>
+        <tbody>
+            {% for product in products.items %}
+            <tr>
+                <td>{{ (products.page - 1) * products.per_page + loop.index }}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.brand.name}}</td>
+                <td><img src="{{url_for('static', filename='images/'+product.image_1)}}" width='200' alt="Image_1"></td>
+                <td><a href="{{url_for('admin_updateproduct', id=product.id)}}" class="float-left btn-sm btn-warning">
+                        Sửa</a></td>
+                <td>
+                    <button type="button" class="float-right btn btn-sm btn-danger" data-toggle="modal"
+                        data-target="#exampleModal-{{product.id}}">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% for product in products.items %}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal-{{product.id}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa {{product.name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có muốn xóa sản phẩm này không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <form action="{{url_for('admin_deleteproduct', id=product.id)}}" method="POST">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin', page=products.prev_num) }}">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in products.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3)
+                    %}
+                    {% if page_num %}
+                    {% if products.page == page_num %}
+                    <li class="page-item active">
+                        <a class="page-link" href="{{ url_for('admin', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                    {% endif %}
+                    {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin', page=products.next_num) }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <a href="#" class="back-to-top" id="top-link" aria-label="Lên đầu trang" onclick="scrollToTop(); return false;">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide button based on scroll position
+        window.onscroll = function () {
+            var topButton = document.getElementById("top-link");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                topButton.style.display = "flex";
+            } else {
+                topButton.style.display = "none";
+            }
+        };
+    </script>
+
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .back-to-top:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-to-top i {
+            font-size: 20px;
+            color: #ffffff;
+            /* White icon */
+        }
+
+        .back-to-top:hover {
+            background-color: #c82333;
+            /* Darker red on hover */
+            text-decoration: none;
+        }
+
+        .back-to-top:hover i {
+            color: #ffffff;
+            /* Keep icon white on hover */
+        }
+    </style>
+
+    <style>
+        .modal-backdrop {
+            display: none;
+        }
+
+        .modal {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+
+    {% for product in products.items %}
+    <div class="modal" id="exampleModal-{{product.id}}" tabindex="-1">
+        <div class="modal-dialog" style="margin-top: 150px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa {{product.name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có muốn xóa sản phẩm này không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <form action="{{url_for('admin_deleteproduct', id=product.id)}}" method="POST">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <style>
+        .modal {
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-dialog {
+            z-index: 2001;
+        }
+
+        .modal-content {
+            z-index: 2002;
+            position: relative;
+        }
+
+        .modal-backdrop {
+            display: none;
+        }
+    </style>
+</div>
+{% endblock body_block %}
+<style>
+    .modal {
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .modal-dialog {
+        z-index: 10000;
+        margin-top: 100px;
+    }
+
+    .modal-content {
+        position: relative;
+        z-index: 10001;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.btn-outline-danger').click(function () {
+            var targetModal = $(this).data('target');
+            $(targetModal).modal('show');
+        });
+    });
+</script>

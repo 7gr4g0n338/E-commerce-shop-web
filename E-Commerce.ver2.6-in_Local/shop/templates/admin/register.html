@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body_block %}
+<div style="padding: 0 1cm;">
+    <h1 class="text-center h1 text-white bg-info p-2" style="margin-top: 0.5cm;">Đăng ký</h1>
+    {% from "_formhelpers.html" import render_field %}
+    <div class="container mt-4">
+        <form method="POST" enctype="multipart/form-data">
+            <div>
+                {{ render_field(form.name, class="form-control")}}
+                {{ render_field(form.username, class="form-control") }}
+                {{ render_field(form.email, class="form-control") }}
+                {{ render_field(form.password, class="form-control") }}
+                {{ render_field(form.confirm, class="form-control") }}
+                <input type="file" name="photo">
+            </div>
+            <p><input type="submit" value="Đăng ký" class="btn btn-info mt-2">
+        </form>
+    </div>
+</div>
+{% endblock %}
