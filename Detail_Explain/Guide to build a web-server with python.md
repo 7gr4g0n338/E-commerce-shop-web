@@ -159,11 +159,11 @@ restart lại bằng lệnh sau:
 check chi tiết log của service:
 > sudo journalctl -u flask-shop -n 50
 
-+ cấu hình ngix để điều hướng tất cả các request từ port 80 đến port 5000 của EC2
++ **cấu hình ngix để điều hướng tất cả các request từ port 80 đến port 5000 của EC2**
 
 > sudo nano /etc/nginx/sites-available/flask-shop
 
-thêm đoạn code sau vào file cấu hình nginx:
+thêm đoạn code sau vào file cấu hình nginx(chú ý sửa địa chỉ ip của EC2):
 ```markdown
 server {
     listen 80;
@@ -193,7 +193,7 @@ check log của nginx:
 
 > sudo tail -f /var/log/nginx/access.log
 
-+ cấu hình ngix để điều hướng tất cả các request từ port 443 đến port 5000 của EC2:
++ **cấu hình ngix để điều hướng tất cả các request từ port 443 đến port 5000 của EC2:**
 > sudo nano /etc/nginx/sites-available/flask-shop
 
 ```markdown
@@ -236,30 +236,6 @@ Organization Name: My Company
 Organizational Unit Name: IT Department
 Common Name: 13.250.42.80
 Email Address: admin@mycompany.com
-```
-
-AI gợi ý:
-```markdown
-Có 2 lựa chọn chính để có chứng chỉ SSL hợp lệ:
-
-Let's Encrypt - Miễn phí và rất phổ biến:
-Tự động gia hạn mỗi 90 ngày
-Được tin cậy bởi hầu hết các trình duyệt
-Cần có domain name
-
-Chứng chỉ thương mại từ các nhà cung cấp:
-Comodo
-DigiCert
-GeoTrust
-Có phí hàng năm
-Hỗ trợ kỹ thuật chuyên nghiệp
-Bảo hiểm bảo mật
-
-Với dự án của bạn, Let's Encrypt là lựa chọn tốt nhất vì:
-Hoàn toàn miễn phí
-Dễ cài đặt và tự động gia hạn
-Đủ tin cậy cho website thương mại
-Bước tiếp theo sẽ là đăng ký domain name và cấu hình Let's Encrypt.
 ```
 
 > sudo nginx -t
