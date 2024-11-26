@@ -41,12 +41,12 @@ VIII. [Risk Assessment & Treatment](#viii-risk-assessment--treatment)<br>
 
 | System Name | Description | Users | Number of Users Served | System Classification | System Security Level |
 |---|--- | --- | --- | --- | --- |
-| E-commerce Web System | A web system that displays store products and provides consultation based on products that customers are interested in. | Administrator: manages products and users. Customers: view and express interest in products for consultation | 1000 | Publicly accessible system with external access | Low security system |
+| E-commerce Web System | A web system that displays store products and provides consultation based on products that customers are interested in. | Administrator: manages products and users.<br> Customers: view and express interest in products for consultation | 100 | Publicly accessible system with external access | Low security system |
 
 ## II. Data Classification and Applied Data Security Standards
 
 ### 1. Users data need to secure
-- Personal information: name, email, phone number, address.
+- Basic Personal information: name, email, phone number, address.
 - Authentication information: password.
 - Product interest history.
 
@@ -60,28 +60,24 @@ VIII. [Risk Assessment & Treatment](#viii-risk-assessment--treatment)<br>
 Data Privacy Compliance:
 - ISO-27001 compliance
 - Data minimization
-- User consent management
 - Data retention policies
 - Privacy policy implementation
-- GDPR data handling requirements
-- PCI DSS guidelines for payment data
 
 ## III. Network table
 
 ### 1. Network security
 ```markdown
 Requirements:
-- Network segmentation
-- Firewall configuration
-- IDS/IPS systems
-- VPN access
+- Network segmentation (if applicable)
+- Firewall configuration 
+- IDS/IPS systems (if applicable)
 ```
 
 ### 2. Inbound traffic:
 | No. | Source | Source IP/IP address range | Destination | Destination IP/IP address range | Protocol name | Port | Description |
 | --- | --- | --- | --- | --- | --- | ---- | --- |
 | 1 | Internet | 0.0.0.0/0 | Web server | xxx | TCP(https) | 443 | Web application access |
-| 2 | VPN | x.x.x.x | Web server | xxx | TCP(ssh) | 22 | Server administration |
+| 2 | Internet | x.x.x.x | Web server | xxx | TCP(ssh) | 22 | Server administration |
 | .... | ... | ... | ... | ... | ... | ... | ... |
 
 ### 3. Outbound traffic:
@@ -147,12 +143,6 @@ All endpoints:
 - JWT for API authentication
 - API versioning
 
-# Headers
-Security-Headers:
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  Content-Security-Policy: default-src 'self'
-
 # Error handling
 Standard error responses:
 - 200/201: Success
@@ -172,8 +162,7 @@ Standard error responses:
 
  | Method | API | Parameters | Description | API security requirements |
  |--------|-----|------------|-------------| -------------------------------|
- | GET/POST | /admin/login | email, password | Xác thực đăng nhập admin | Input validation:<br>- email: Required, valid email format<br>- password: Required, min 8 chars<br>Rate limit: 5 attempts/15 minutes<br>Response:<br>- 200: Admin JWT token + admin info<br>- 401: "Invalid credentials"<br>- 429: "Too many attempts" |
- | GET/POST | /admin/register | name, username, email, password | Đăng ký tài khoản admin mới | Input validation:<br>- name: Required, 2-50 chars<br>- username: Required, unique, 4-50 chars<br>- email: Required, valid format, unique<br>- password: Required, min 8 chars, complexity rules<br>Response:<br>- 201: Success message<br>- 409: "Email/username exists"<br>- 400: Validation errors |
+ | GET/POST | /admin/login | email, password | Xác thực đăng nhập admin | Input validation:<br>- email: Required, valid email format<br>- password: Required, min 8 chars and mixed letters, numbers, special chars<br>Rate limit: 5 attempts/15 minutes<br>Response:<br>- 200: Admin JWT token + admin info<br>- 401: "Invalid credentials"<br>- 429: "Too many attempts" |
  | GET | /admin | None | Trang quản trị chính | Authentication: Admin token required<br>Rate limit: 100 req/min<br>Response:<br>- 200: Success message<br> - 401: Unauthorized |
  | GET | /admin/brands | None |Quản lý danh sách thương hiệu | Authentication: Admin token required<br>Rate limit: 100 req/min<br>Response:<br>- 200: Success message<br> - 401: Unauthorized |
  | GET | /admin/categories | None | Quản lý danh mục sản phẩm | Authentication: Admin token required<br>Rate limit: 100 req/min<br>Response:<br>- 200: Success message<br> - 401: Unauthorized |
@@ -183,6 +172,7 @@ Standard error responses:
  | GET/POST | /admin/addproduct | name, price, stock, desc, brand, category, image_1 | Thêm sản phẩm mới | Authentication: Admin token required<br> Rate limit: 30 req/min<br> Input validation:<br> - name: Required, 3-80 chars<br> - price: Required, numeric, > 0<br> - stock: Required, numeric, >= 0<br> - image_1: Required, jpg/png, max 5MB<br> - brand_id: Required, valid brand<br> - category_id: Required, valid category<br> Response:<br> - 201: Success message<br> - 400: Validation errors<br> - 401: Unauthorized<br> - 403: Not admin |
  | GET/POST | /admin/updateproduct/int:id | name, price, stock, desc, brand, category, image_1 | Cập nhật thông tin sản phẩm | Authentication: Admin token required<br>Input validation:<br>- All product fields<br>- id: Valid product ID<br>Response:<br>- 200: Success message<br>- 404: Product not found |
  | POST | /admin/deleteproduct/int:id | id | Xóa sản phẩm | Authentication: Admin token required<br>Input validation:<br>- id: Valid product ID<br>Response:<br>- 200: Success message<br>- 404: Product not found |
+ | GET | /admin/logout | None | Đăng xuất | Authentication: Admin token required<br>Ressponse:<br>- 200: success<br>- 404: "No found" |
 
 #### Product Routes:
 
@@ -228,7 +218,7 @@ Standard error responses:
  |--------|-----|------------|-------------| ----------------------------- |
  | POST | /addcart | product_id, quantity | Thêm sản phẩm vào giỏ hàng | Authentication: Customer token required<br> Rate limit: 50 req/min<br> Input validation:<br> - product_id: Required, valid product<br> - quantity: Required, numeric, > 0<br> Response:<br> - 200: Success message<br> - 400: "Invalid quantity"<br> - 404: "Product not found" |
  | GET | /cart | None | Xem giỏ hàng | Authentication: Customer token required<br>Rate limit: 50 req/min<br>Ressponse:<br>- 200: Product list<br>- 404: "Not found" |
- | GET | /updatecart/int:code | code, quantity | Cập nhật số lượng sản phẩm | Authentication: Customer token required<br>Rate limit: 50 req/min<br>Ressponse:<br>- 200: success update<br>- 404: "Not found" |
+ | GET | /updatecart/int:id | id, quantity | Cập nhật số lượng sản phẩm | Authentication: Customer token required<br>Input validate for id and quantity >= 0<br>Rate limit: 50 req/min<br>Ressponse:<br>- 200: success update<br>- 404: "Not found" |
  | GET | /deleteitem/int:id | id | Xóa sản phẩm khỏi giỏ hàng | Authentication: Customer token required<br>Input validation:<br>- id: Valid cart item ID<br>Response:<br>- 200: Success message<br>- 404: Item not found | 
  | GET | /clearcart | None | Xóa toàn bộ giỏ hàng | Authentication: Customer token required <br> Rate limit: 20 req/min<br> Response:<br> - 200: Success message<br> - 401: Unauthorized |
 
@@ -932,7 +922,6 @@ Prevention:
 #### Database Encryption
 - Implement AES-256 encryption for sensitive data:
   + Personal information (name, phone, address)
-  + Financial data
   + Authentication tokens
 - Use bcrypt with salt for password hashing
 - Store encryption keys in secure hardware module
@@ -946,13 +935,6 @@ Prevention:
     Encrypt fields: name, phone, address separately
     Implement field-level encryption
     Enable searching on encrypted fields using deterministic encryption
- 
-- Financial Data:
-    Use envelope encryption
-    Rotate encryption keys every 30 days
-    Implement separate encryption keys for different data types
-    Store financial data in separate encrypted tables
-    Enable audit logging for all access
 
 - Authentication Tokens:
     Use hardware-based random number generator
@@ -1238,114 +1220,6 @@ Prevention:
   Quarterly security header audits
   Automated certificate monitoring
   SSL/TLS error logging and alerts
-```
-
-#### API Communication
-- Encrypt all API traffic
-- Implement secure token transmission
-- Rate limiting on all endpoints
-- Request/Response validation
-
-```markdown
-# API Traffic Encryption
-  Enforce TLS 1.3 only
-  Configure strong cipher suites (e.g., ECDHE-ECDSA-AES256-GCM-SHA384)
-  Enable HSTS with minimum 1-year duration
-  Implement certificate pinning for mobile clients
-  Regular SSL/TLS configuration testing
-
-# Secure Token Transmission
-  Store JWT tokens in HttpOnly cookies
-  Set Secure flag for all cookies
-  Implement token rotation every 30 minutes
-  Include fingerprint validation
-  Add refresh token mechanism
-  Monitor token usage patterns
-  Implement token revocation system
-
-# Rate Limiting Strategy
-  Global rate limits: 1000 requests per IP per hour
-  Authentication endpoints: 5 attempts per 15 minutes
-  Admin endpoints: 100 requests per minute
-  User-specific endpoints: 50 requests per minute
-  Search endpoints: 30 requests per minute
-  Implement graduated response (warn, delay, block)
-  Use Redis for rate limit tracking
-  Set up rate limit monitoring alerts
-
-# Request/Response Validation
-- Validate request headers:
-    Content-Type enforcement
-    Accept header validation
-    User-Agent verification
-    Origin validation for CORS
-
-# Request payload validation:
-    Schema validation for all inputs
-    Size limits for all fields
-    Content type verification
-    Character encoding validation
-    Malicious pattern detection
-
-# Response validation:
-    Data masking for sensitive information
-    Response headers sanitization
-    Error message sanitization
-    Response size monitoring
-    Content type verification
-
-# Additional Security Measures
-  Implement API versioning
-  Set up request logging
-  Monitor unusual traffic patterns
-  Configure automated blocking for suspicious IPs
-  Regular security scanning of API endpoints
-  Implement circuit breakers for dependent services
-```
-
-#### Internal Communications
-- Encrypted service-to-service communication
-- Secure database connections
-- VPN for remote access
-- Network traffic monitoring
-
-```markdown
-# Encrypted Service-to-Service Communication
-  Use TLS 1.3 for all internal service communications
-  Implement mutual TLS (mTLS) authentication between services
-  Rotate certificates every 90 days
-  Use strong cipher suites (AES-256-GCM)
-  Enable perfect forward secrecy
-  Monitor certificate expiration dates
- 
-# Secure Database Connections
-  Enable SSL/TLS for database connections
-  Use connection pooling with timeout settings
-  Implement connection string encryption
-  Set up read-only replicas for reporting
-  Monitor database access patterns
-  Use separate database users per service
-  Regular audit of database permissions
- 
-# VPN for Remote Access
-  Configure site-to-site VPN using IPSec
-  Implement multi-factor authentication for VPN access
-  Set up network segmentation behind VPN
-  Monitor VPN connection logs
-  Implement automatic VPN timeout after inactivity
-  Regular VPN access audit
-  Whitelist allowed IP ranges
- 
-# Network Traffic Monitoring
-  Deploy IDS/IPS systems
-  Set up network flow monitoring
-  Configure alerts for suspicious patterns
-  Monitor bandwidth usage patterns
-  Log all administrative access
-  Regular security log review
-  Implement network segmentation
-  Monitor east-west traffic
-  Set up DDoS protection
 ```
 
 #### Data Transfer Controls

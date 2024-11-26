@@ -11,7 +11,7 @@
 + Chỉnh lại trang login, thêm dòng đăng kí tài khoản, quên mật khẩu. ✔
 
 8. Các bug và function được gợi ý:
-Đư** recommend:
+Đu** recommend:
 8.1 Các bug liên quan tới xác thực backend:
 + tất cả các input thì có thể chỉnh số lớn hơn số lượng có hoặc số âm cũng được. => đã làm thay đổi logic code, user bắt buộc phải login thì mới thêm được sản phẩm vào mục quan tâm. ✔
 + Điều hướng lại trang / khi truy cập vào các trang hoặc đường dẫn không tồn tại. ✔

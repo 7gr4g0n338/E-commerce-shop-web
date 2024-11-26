@@ -398,9 +398,9 @@ Best practices trong lập trình web với Flask
 
 vậy sqlalchemy, alembic và sqlite có mối quan hệ như thế nào?
 
-Python Code -> SQLAlchemy -> SQLite Database
-                  ↑
-               Alembic
+Python Code -> SQLAlchemy -> SQLite Database<br>
+__________________↑<br>
+_______________Alembic
 
 SQLAlchemy làm việc trực tiếp với SQLite
 

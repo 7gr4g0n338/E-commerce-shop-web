@@ -30,7 +30,16 @@ Note: This is a personal project and only using for education, not a commercial 
     + Design again for better user experience in all phone and web interface
     + ...
 
+- More information in [Application_Specification_Document.md](/Detail_Explain/Application%20specification%20document.md) and [Technical_Specification_Document.md](/Detail_Explain/Technical%20specification%20document.md)
+
+### 2. Design Security.
+-  Compliance with ISO-27001.
+
+More detail in [Security_Design.md](/Detail_Explain/Security_Design.md)
+
 ## III. Project Demo
+**Note: This is a production demo, still not complete.**
+
 ### 1. Login Page and Register Page
 Login page of guest.
 ![Login Page](/Images/Production_Demo/Guest_in_log_in_page.png)
@@ -73,7 +82,7 @@ Administrator can search and choose option to sort by product and account custom
 ### 6. Other functions for customer
 
 Customer can see the product in Interested cart.
-![Interested Cart](/Images/Production_Demo/Customer_in_interested_page.png)
+![Interested Cart](/Images/Production_Demo/Customer_in_Interested_page.png)
 
 Customer can update personal information.
 ![Personal Information](/Images/Production_Demo/Customer_in_update_resume_page.png)
